@@ -988,7 +988,14 @@ const Footer = () => {
   return (
     <footer className="py-32 px-6 text-center bg-black border-t border-zinc-900/40">
       <div ref={ref} className={`max-w-2xl mx-auto space-y-12 reveal-wrap ${revealed ? 'revealed' : ''}`}>
-        <p className="reveal-child d1 text-zinc-600 text-xs font-mono uppercase tracking-[0.4em]">Prophetic Disclaimer</p>
+        <p className="reveal-child d1 text-zinc-600 text-xs font-mono uppercase tracking-[0.4em]">Project Thesis</p>
+        <div className="reveal-child d1 p-6 sm:p-10 border border-blue-900/40 bg-blue-950/10 rounded-2xl sm:rounded-[3rem] space-y-4 text-left">
+          <h4 className="text-xl font-black text-white uppercase tracking-tighter">Why This Exists</h4>
+          <p className="text-zinc-400 font-light leading-relaxed text-sm">
+            This project exists to educate the public about the greater powers at work in the world. Ask yourself: does Pax Judaica explain the chaos we see today? Every day, more people are learning what Pax Judaica means — and how it is playing out in real time.
+          </p>
+        </div>
+        <p className="reveal-child d2 text-zinc-600 text-xs font-mono uppercase tracking-[0.4em]">Prophetic Disclaimer</p>
         <div className="reveal-child d2 p-6 sm:p-12 border border-red-900/50 bg-red-950/10 rounded-2xl sm:rounded-[3rem] space-y-6">
           <h4 className="text-2xl font-black text-white uppercase tracking-tighter">The Resistance Thesis</h4>
           <p className="text-zinc-400 font-light leading-relaxed">
