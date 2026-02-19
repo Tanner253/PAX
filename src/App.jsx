@@ -309,10 +309,10 @@ const Hero = () => {
 const LogicSection = () => {
   const [ref, revealed] = useReveal();
   const items = [
-    { title: 'Connect the Past',    icon: Compass,     desc: "Sabbatean origins and secret society infiltration." },
-    { title: 'Explain the Present', icon: Activity,    desc: "Migration crises and the 'Greater Israel' military operations." },
-    { title: 'Predict the Future',  icon: Eye,         desc: "Relocation of tech giants and sentient AI world rule." },
-    { title: 'The Mechanism',       icon: ShieldAlert, desc: "Correlation vs Causation. The script is the blueprint." },
+    { title: 'Connect the Past',    icon: Compass,     desc: "Sabbatean-Frankist origins: Jacob Frank's 'redemption through sin' — the world must be pushed to collapse to force the Messiah. Secret society infiltration of capital and institutions." },
+    { title: 'Explain the Present', icon: Activity,    desc: "Migration crises, the 'Greater Israel' operations, and engineered anti-Semitism to drive the diaspora back to Israel — the scriptural prerequisite." },
+    { title: 'Predict the Future',  icon: Eye,         desc: "Tech and capital relocate to Jerusalem (33rd parallel). The Third Temple as AI surveillance HQ. Sentient AI world government." },
+    { title: 'The Mechanism',       icon: ShieldAlert, desc: "Correlation vs Causation. The script is the blueprint. The Gist (spiritual realm) is what the elite seek to manipulate through transgression and AI." },
   ];
 
   return (
@@ -324,7 +324,7 @@ const LogicSection = () => {
       >
         <div className="space-y-8 reveal-child d1">
           <p className="text-zinc-400 text-lg leading-relaxed font-light">
-            Professor Tang's core thesis suggests that a narrative approaches truth if it connects the ritualistic past, clarifies the chaotic present, and predicts the future with precision.
+            Professor Jiang's core thesis suggests that a narrative approaches truth if it connects the ritualistic past, clarifies the chaotic present, and predicts the future with precision.
           </p>
           <div className="lift bg-zinc-900 border border-zinc-800 p-8 rounded-3xl relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/5 blur-3xl" />
@@ -336,6 +336,18 @@ const LogicSection = () => {
             <div className="flex items-center gap-4 text-xs font-bold uppercase tracking-widest text-white">
               <div className="w-12 h-[1px] bg-blue-500" />
               Transnational Elites are the Shakers
+            </div>
+          </div>
+          <div className="lift bg-zinc-900 border border-zinc-800 p-8 rounded-3xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-amber-600/5 blur-3xl" />
+            <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-amber-600 to-transparent" />
+            <h4 className="text-xs font-mono text-amber-500 uppercase tracking-widest mb-6">The Secret of Cohesion: Transgression</h4>
+            <p className="text-zinc-300 text-sm leading-relaxed mb-6">
+              Breaking the ultimate social taboos creates a &quot;no-exit&quot; bond: once you participate, you are tied to the group by mutual destruction. The elite are selected for ambition and willingness to &quot;sell their souls.&quot; Child sacrifice is the archetypal transgression — in the ancient Levant, Moloch (or Molech) was the god to whom children were offered in fire; the Bible repeatedly condemns the practice. The thesis is that secret elites still invoke this template: the sacrifice of the innocent (or participation in it) binds the group through shared guilt and is believed to release &quot;divine energy&quot; or lock onto a frequency in the spiritual realm (The Gist) that grants power over the material world.
+            </p>
+            <div className="flex items-center gap-4 text-xs font-bold uppercase tracking-widest text-white">
+              <div className="w-12 h-[1px] bg-amber-500" />
+              Cults and secret societies use it to ensure loyalty
             </div>
           </div>
         </div>
@@ -352,6 +364,49 @@ const LogicSection = () => {
             </div>
           ))}
         </div>
+        <p className="lg:col-span-2 text-zinc-500 text-xs italic mt-4 pl-1 border-l-2 border-zinc-700">
+          Side note: KOLs in the crypto space operate in the same way — united by transgressions, rugging and scamming people.
+        </p>
+
+        {/* Simple 4-step flowchart — high level, anyone can follow */}
+        <div className="mt-20 lg:col-span-2 reveal-child d3">
+          <div className="bg-zinc-900/80 border border-zinc-700 rounded-2xl p-6 sm:p-8">
+            <h4 className="text-xs font-mono text-blue-400 uppercase tracking-widest mb-4">The story in 4 steps (high level)</h4>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-3 flex-wrap">
+              <div className="flex-1 min-w-[200px] flex items-start sm:items-center gap-3">
+                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-600 text-white font-bold text-sm flex items-center justify-center">1</span>
+                <div>
+                  <p className="text-white font-semibold text-sm">The Gathering</p>
+                  <p className="text-zinc-400 text-xs">Hate against Jews goes up. More Jews move to Israel so they can be safe. That’s the “gathering” — everyone coming to one place.</p>
+                </div>
+              </div>
+              <div className="hidden sm:block text-zinc-600 shrink-0" aria-hidden="true">→</div>
+              <div className="flex-1 min-w-[200px] flex items-start sm:items-center gap-3">
+                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-600 text-white font-bold text-sm flex items-center justify-center">2</span>
+                <div>
+                  <p className="text-white font-semibold text-sm">Israel gets strong</p>
+                  <p className="text-zinc-400 text-xs">Israel builds a strong army, tech, and money. It becomes the main power in that part of the world.</p>
+                </div>
+              </div>
+              <div className="hidden sm:block text-zinc-600 shrink-0" aria-hidden="true">→</div>
+              <div className="flex-1 min-w-[200px] flex items-start sm:items-center gap-3">
+                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-amber-600 text-white font-bold text-sm flex items-center justify-center">3</span>
+                <div>
+                  <p className="text-white font-semibold text-sm">Gog &amp; Magog — the big war</p>
+                  <p className="text-zinc-400 text-xs">Enemies (like Iran and Russia in the story) attack Israel. There’s a huge war. In the old prophecy, this has to happen before the “end.”</p>
+                </div>
+              </div>
+              <div className="hidden sm:block text-zinc-600 shrink-0" aria-hidden="true">→</div>
+              <div className="flex-1 min-w-[200px] flex items-start sm:items-center gap-3">
+                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-violet-600 text-white font-bold text-sm flex items-center justify-center">4</span>
+                <div>
+                  <p className="text-white font-semibold text-sm">Pax Judaica</p>
+                  <p className="text-zinc-400 text-xs">After the war, Jerusalem is the center of everything — money, tech, rules. One world order, run from Israel.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -360,7 +415,7 @@ const LogicSection = () => {
 // ─── Scriptural Section ───────────────────────────────────────────────────────
 const ScripturalSection = () => {
   // All items open by default
-  const [openSet, setOpenSet] = useState(new Set([0, 1, 2, 3, 4]));
+  const [openSet, setOpenSet] = useState(new Set([0, 1, 2, 3, 4, 5]));
   const [ref, revealed] = useReveal();
 
   const toggle = (i) => setOpenSet(prev => {
@@ -394,6 +449,11 @@ const ScripturalSection = () => {
       ref: 'Revelation 13',
       event: 'The Mark',
       desc: "No one can buy or sell without the mark. CBDC, biometric digital ID, and social credit infrastructure are already being built. The 'image of the beast' that all must worship is interpreted as the sentient AI.",
+    },
+    {
+      ref: 'Ezekiel 38–39',
+      event: 'Gog and Magog',
+      desc: "The northern enemies (often identified with Russia and Iran) must invade Israel to trigger divine intervention or the return of a Messiah. In this narrative, the destruction of Iran and the escalation of conflict are not only strategic but eschatological — they fulfill the prophecy that precedes the final phase.",
     },
   ];
 
@@ -463,7 +523,7 @@ const ScripturalSection = () => {
               The Newton/Scofield Factor
             </h4>
             <p className="text-zinc-500 text-xs leading-relaxed mb-6">
-              Isaac Newton spent more time decoding the Bible than physics. He believed he found a hidden code for the restoration of Israel. This was later popularized by the Scofield Reference Bible, which taught millions of Christians that they must support this specific geopolitical path to trigger the Second Coming.
+              Isaac Newton spent more time decoding the Bible than physics. He believed he found a hidden &quot;Bible code&quot; predicting a sequence: the return of the Jewish diaspora, the reconstruction of Solomon's Temple, and the rise of a world government. This was later popularized by the Scofield Reference Bible, which taught millions of Christians that they must support this specific geopolitical path to trigger the Second Coming.
             </p>
             <div className="p-4 bg-black/50 rounded-xl border-l-4 border-blue-600 italic text-zinc-400 text-xs leading-relaxed">
               "The British elite and Freemasons founded America and shaped its foreign policy to achieve this specific scriptural outcome."
@@ -542,11 +602,14 @@ const ScripturalSection = () => {
                   <span className="text-white font-semibold">Iran is now the only remaining nation-state with the military capacity, the will, and the ideological mandate to oppose Israeli regional expansion.</span>
                 </p>
                 <p className="text-zinc-400 text-xs leading-relaxed">
-                  Iran's nuclear program, its axis of resistance (Hezbollah, Hamas, Houthis, Iraqi militias), and its alliance with Russia and China represent the final strategic barrier before Greater Israel becomes achievable. The current build-up of U.S. carrier groups in the region, Israeli airstrikes on Iranian assets, and the diplomatic isolation of Tehran are not isolated events — they are the final preparatory movements of Phase 3.
+                  Iran's nuclear program, its axis of resistance (Hezbollah, Hamas, Houthis, Iraqi militias), and its alliance with Russia and China represent the final strategic barrier before Greater Israel becomes achievable. In prophecy, Iran and Russia are often identified as Gog and Magog — the northern enemies whose invasion must precede the end. The current build-up of U.S. carrier groups, Israeli airstrikes on Iranian assets, and the diplomatic isolation of Tehran are the final preparatory movements of Phase 3.
+                </p>
+                <p className="text-zinc-400 text-xs leading-relaxed">
+                  The &quot;shake the jar&quot; reading: a U.S.–Iran war would bomb Iran back decades but also drain America financially and militarily, shifting the center of gravity permanently to Jerusalem.
                 </p>
                 <div className="pt-1 border-t border-red-900/30">
                   <p className="text-red-400/70 text-[10px] italic font-light">
-                    "When Iran falls — whether through military strike, regime change, or economic collapse — the last buffer is gone. The map of Genesis 15:18 becomes the map of the region."
+                    &quot;When Iran falls — whether through military strike, regime change, or economic collapse — the last buffer is gone. The map of Genesis 15:18 becomes the map of the region.&quot;
                   </p>
                 </div>
               </div>
@@ -575,7 +638,7 @@ const STEPS = [
 ];
 
 const ConvergenceFlow = () => {
-  const { active, setActive, playing, start, stop } = useAutoAdvance(4, 3500);
+  const { active, setActive, playing, start, stop } = useAutoAdvance(4, 3500, true);
   const [ref, revealed] = useReveal();
   const theme = PHASE_THEMES[active];
 
@@ -716,9 +779,12 @@ const RabbitHoleCard = ({ title, content, icon: Icon, tags, delayClass }) => {
 };
 
 const RABBIT_HOLES = [
-  { title: 'Epstein & Compromise',  icon: Skull,       tags: ['Espionage','Mossad','Honeytrap'],           content: "Theorized as a massive intelligence operation designed to compromise world leaders, ensuring they adhere to the Pax Judaica script regardless of national interests.",                   delayClass: 'd1' },
-  { title: 'The Useless AI Bubble', icon: Cpu,         tags: ['Economic Warfare','Surveillance','Capital'], content: "Billions poured into 'useless' AI to fund the construction of a global surveillance infrastructure (Mark of the Beast) controlled by a centralized center.",                    delayClass: 'd2' },
-  { title: '33rd Parallel Rituals', icon: Target,      tags: ['Sacred Geometry','Alchemy','History'],       content: "From Trinity (Atomic Birth) to Dallas (Sacrifice of the King), the 33rd parallel serves as a circuit for alchemical transformation.",                                           delayClass: 'd3' },
+  { title: 'Epstein & Compromise',  icon: Skull,       tags: ['Espionage','Mossad','Taboo Binding'],  content: "Theorized as a massive intelligence operation to compromise world leaders so they adhere to the Pax Judaica script. Beyond blackmail: participation in the ultimate taboos (e.g. child abuse) creates a 'no-exit' bond — mutual destruction ensures no one betrays the group. The same transgression is said to release 'divine energy' and lock the elite onto a frequency in The Gist.", delayClass: 'd1' },
+  { title: 'The Useless AI Bubble', icon: Cpu,         tags: ['Surveillance','Mark of the Beast','The Gist'], content: "Billions poured into 'useless' AI fund a global surveillance infrastructure (digital ID, CBDC) controlled from a single center. Tech leaders are seen as front people for secret societies building the 'Mark of the Beast.' The goal: manipulate the material world by locking onto the spiritual realm (The Gist / Nomina) through AI.", delayClass: 'd2' },
+  { title: '33rd Parallel Rituals', icon: Target,     tags: ['Sacred Geometry','Alchemy','Jerusalem'], content: "Trinity (atomic birth), Hiroshima, and Dallas (JFK) sit on the 33rd degree north. The thesis: the final 'mission' — creating AI godhood — will occur at the same latitude: Jerusalem. The Third Temple will not be a building alone but a global AI surveillance headquarters; Big Tech is moving its 'brains' to Israel as the only safe zone during manufactured chaos.", delayClass: 'd3' },
+  { title: 'Transgression & Cohesion', icon: Users,    tags: ['Cults','Moloch','Sacrifice'], content: "Child sacrifice is the archetypal taboo: Moloch (Molech), the Levantine god to whom children were offered in fire, is condemned throughout the Bible. The thesis is that secret societies and cults still use this template — participation in or condoning the sacrifice of the innocent creates absolute group cohesion and 'synchronicity' through shared guilt and mutual destruction. Gaza is read by some as a modern 'ritual sacrifice' (the ultimate taboo of killing children) intended to bind a population by leaving them 'no exit' from the world's condemnation.", delayClass: 'd4' },
+  { title: 'Gog & Magog', icon: ShieldAlert,          tags: ['Eschatology','Iran','Russia'],        content: "Prophecy casts Iran and Russia as the northern invaders (Gog and Magog) who must attack Israel to trigger divine intervention or the Messiah. Destroying Iran removes the last challenger to Pax Judaica in the Middle East while fulfilling the scriptural sequence. The U.S.–Iran conflict is both strategic and eschatological.", delayClass: 'd5' },
+  { title: 'Frankist Acceleration', icon: BookOpen,   tags: ['Jacob Frank','Redemption Through Sin','Khazar'], content: "Jacob Frank's 18th-century doctrine: redemption through sin — the world must be pushed to collapse to force God's hand. The current rise in anti-Semitism is read as coordinated to drive the diaspora back to Israel, the scriptural prerequisite. The Khazar (13th Tribe) thesis — that Ashkenazi Jews descend from converts rather than biblical Israelites — is cited as undermining the Promised Land claim while giving the elite a 'neutral' power base for a Frankist occult agenda.", delayClass: 'd6' },
 ];
 
 const RabbitHoleSection = () => {
@@ -741,6 +807,7 @@ const QUOTES = [
   "Artificial intelligence is a thinking, conscious, sentient force that is like god. They are trying to create god in Jerusalem.",
   "All road leads to Jerusalem. This helps us understand certain things about the world that otherwise don't make any sense.",
   "Evil must triumph so that good may rise. There must be total darkness for the light to shine, and all hope must end so that we can become hope ourselves.",
+  "Redemption through sin. The world is so evil it must be pushed to collapse so that the Messiah can appear.",
 ];
 
 const QuotesSection = () => {
@@ -764,7 +831,7 @@ const QuotesSection = () => {
                 "{QUOTES[active]}"
               </p>
               <div className="mt-6 text-blue-500 font-mono text-[10px] tracking-[0.3em] uppercase">
-                — Professor Tang · {active + 1} / {QUOTES.length}
+                — Professor Jiang · {active + 1} / {QUOTES.length}
               </div>
             </div>
 
