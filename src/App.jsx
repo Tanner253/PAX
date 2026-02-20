@@ -236,10 +236,19 @@ const NavTypewriter = () => {
   );
 };
 
+const NAV_CA_ADDRESS = '36ypAhDNYWVBZCcDFxSoB5moA2gsuVqaYDUfHQNcpump';
+
 const Navbar = () => {
   const videoRef = useRef(null);
   const [showFallback, setShowFallback] = useState(false);
   const [typewriterVisible, setTypewriterVisible] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const copyAddress = () => {
+    navigator.clipboard.writeText(NAV_CA_ADDRESS).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
@@ -285,6 +294,14 @@ const Navbar = () => {
           <a key={href} href={href} className="nav-link hover:text-blue-400 transition-colors">{label}</a>
         ))}
       </div>
+      <button
+        type="button"
+        onClick={copyAddress}
+        className="hidden md:flex items-center border-l border-zinc-800 pl-6 text-[9px] font-mono text-zinc-500 hover:text-zinc-300 transition-colors focus:outline-none focus:ring-1 focus:ring-zinc-500 rounded pr-2 py-1 -mr-1"
+        title="Copy CA address"
+      >
+        {copied ? <span className="text-green-400">Copied</span> : <span>36y...pump</span>}
+      </button>
       <div className="flex items-center border-l border-zinc-800 pl-6 gap-0">
         <button
           type="button"
