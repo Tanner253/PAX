@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import {
   MapPin, Cpu, Skull, Users, ShieldAlert, Eye,
   ChevronRight, ChevronDown, BookOpen, Target, Activity,
-  Compass, Quote, History, Workflow, Play, Pause, Landmark
+  Compass, Quote, History, Workflow, Play, Pause, Landmark,
+  Menu, X
 } from 'lucide-react';
 import WorldMap from './WorldMap';
 import okImg from '../images/ok.jpg';
@@ -238,11 +239,14 @@ const NavTypewriter = () => {
 
 const NAV_CA_ADDRESS = '36ypAhDNYWVBZCcDFxSoB5moA2gsuVqaYDUfHQNcpump';
 
+const NAV_LINKS = [['#quotes','Archives'],['#logic','Logic'],['#scripture','Scripture'],['#convergence','Flow'],['#control','Rabbit Hole']];
+
 const Navbar = () => {
   const videoRef = useRef(null);
   const [showFallback, setShowFallback] = useState(false);
   const [typewriterVisible, setTypewriterVisible] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const copyAddress = () => {
     navigator.clipboard.writeText(NAV_CA_ADDRESS).then(() => {
       setCopied(true);
@@ -265,6 +269,7 @@ const Navbar = () => {
     };
   }, []);
   return (
+  <>
   <nav className="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/[0.06] px-6 py-4 flex justify-between items-center">
     <div className="flex items-center gap-2">
       {showFallback ? (
@@ -290,7 +295,7 @@ const Navbar = () => {
     </div>
     <div className="hidden md:flex items-center gap-8">
       <div className="flex gap-8 text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em]">
-        {[['#quotes','Archives'],['#logic','Logic'],['#scripture','Scripture'],['#convergence','Flow'],['#control','Rabbit Hole']].map(([href, label]) => (
+        {NAV_LINKS.map(([href, label]) => (
           <a key={href} href={href} className="nav-link hover:text-blue-400 transition-colors">{label}</a>
         ))}
       </div>
@@ -325,7 +330,53 @@ const Navbar = () => {
         )}
       </div>
     </div>
+    <button
+      type="button"
+      onClick={() => setMobileOpen(o => !o)}
+      className="md:hidden p-2 text-zinc-400 hover:text-white transition-colors rounded focus:outline-none focus:ring-1 focus:ring-zinc-500"
+      aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+      aria-expanded={mobileOpen}
+    >
+      {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+    </button>
   </nav>
+  {mobileOpen && (
+    <div className="fixed inset-0 z-40 pt-[73px] bg-black/95 backdrop-blur-md md:hidden">
+      <div className="flex flex-col gap-1 px-6 py-6 border-t border-zinc-800">
+        {NAV_LINKS.map(([href, label]) => (
+          <a
+            key={href}
+            href={href}
+            onClick={() => setMobileOpen(false)}
+            className="py-4 text-sm font-bold text-zinc-300 hover:text-white uppercase tracking-widest border-b border-zinc-800/60"
+          >
+            {label}
+          </a>
+        ))}
+        <button
+          type="button"
+          onClick={() => { copyAddress(); }}
+          className="py-4 text-left text-xs font-mono text-zinc-500 hover:text-zinc-300 border-b border-zinc-800/60"
+        >
+          {copied ? <span className="text-green-400">Copied</span> : <span>CA 36y...pump</span>}
+        </button>
+        <button
+          type="button"
+          onClick={() => { setTypewriterVisible(v => !v); }}
+          className="flex items-center gap-2 py-4 text-left text-xs font-mono text-zinc-500 hover:text-zinc-300 border-b border-zinc-800/60"
+        >
+          {typewriterVisible ? <StarOfDavidSymbol size={16} className="text-zinc-300 shrink-0" /> : <TriangleSymbol size={16} className="text-zinc-300 shrink-0" />}
+          <span>33° — Novus Ordo Seclorum</span>
+        </button>
+        {typewriterVisible && (
+          <div className="py-4 pl-6 border-b border-zinc-800/60">
+            <NavTypewriter />
+          </div>
+        )}
+      </div>
+    </div>
+  )}
+  </>
   );
 };
 
