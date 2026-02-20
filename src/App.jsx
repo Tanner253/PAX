@@ -15,23 +15,22 @@ const GlobalStyles = () => (
     ::-webkit-scrollbar-track { background: #000; }
     ::-webkit-scrollbar-thumb { background: #2563eb; border-radius: 9999px; box-shadow: 0 0 6px rgba(37,99,235,0.8); }
 
-    @keyframes glitch {
-      0%,84%,100% { clip-path: none; transform: translate(0,0); }
-      86% { clip-path: inset(28% 0 52% 0); transform: translate(-4px,0); }
-      88% { clip-path: inset(68% 0 12% 0); transform: translate( 4px,0); }
-      90% { clip-path: inset(8%  0 82% 0); transform: translate(-3px,0); }
-      92% { clip-path: inset(48% 0 32% 0); transform: translate( 3px,0); }
-      94% { clip-path: inset(4%  0 88% 0); transform: translate(-2px,0); }
+    @keyframes hero-title-reveal {
+      0% { opacity: 0; letter-spacing: 0.35em; transform: scale(0.94); filter: blur(4px); }
+      100% { opacity: 1; letter-spacing: -0.04em; transform: scale(1); filter: blur(0); }
     }
-    @keyframes glitch-r {
-      0%,84%,100% { clip-path: none; transform: translate(0,0); opacity: 0; }
-      86% { clip-path: inset(28% 0 52% 0); transform: translate( 5px,0); opacity:0.5; }
-      88% { clip-path: inset(68% 0 12% 0); transform: translate(-5px,0); opacity:0.5; }
-      90% { clip-path: inset(8%  0 82% 0); transform: translate( 4px,0); opacity:0.5; }
-      92% { clip-path: inset(48% 0 32% 0); transform: translate(-4px,0); opacity:0.5; }
-      94% { clip-path: inset(4%  0 88% 0); transform: translate( 2px,0); opacity:0.5; }
+    @keyframes hero-title-shimmer {
+      0% { background-position: 120% center; }
+      100% { background-position: -20% center; }
     }
-
+    .hero-title {
+      background: linear-gradient(90deg, #fafafa 0%, #e4e4e7 18%, #fff 38%, #a1a1aa 50%, #fff 62%, #e4e4e7 82%, #fafafa 100%);
+      background-size: 220% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: hero-title-reveal 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both, hero-title-shimmer 6s ease-in-out 1.5s infinite;
+    }
     @keyframes float-a { 0%,100%{transform:translateY(0) scale(1);} 50%{transform:translateY(-28px) scale(1.04);} }
     @keyframes float-b { 0%,100%{transform:translateY(0) scale(1);} 50%{transform:translateY(-18px) scale(0.97);} }
     @keyframes orb-pulse { 0%,100%{opacity:0.14;} 50%{opacity:0.32;} }
@@ -40,14 +39,6 @@ const GlobalStyles = () => (
     @keyframes fade-up { from{opacity:0;transform:translateY(28px);} to{opacity:1;transform:translateY(0);} }
     @keyframes scan { from{background-position:0 0;} to{background-position:0 100px;} }
 
-    .glitch-text { position:relative; display:inline-block; animation:glitch 7s infinite; }
-    .glitch-text::after {
-      content: attr(data-text);
-      position:absolute; inset:0;
-      color:#60a5fa;
-      animation:glitch-r 7s infinite;
-      pointer-events:none;
-    }
     .caret { animation:caret 0.9s step-start infinite; }
     .progress-glow { animation:progress-glow 2s ease-in-out infinite; }
     .orb-a { animation:float-a 7s ease-in-out infinite, orb-pulse 4s ease-in-out infinite; }
@@ -78,6 +69,13 @@ const GlobalStyles = () => (
     .nav-link { position:relative; }
     .nav-link::after { content:''; position:absolute; left:0; bottom:-2px; width:0; height:1px; background:#3b82f6; transition:width 0.3s ease; }
     .nav-link:hover::after { width:100%; }
+
+    /* Nav 33° + triangle: subtle pulse so it’s clear it’s clickable */
+    @keyframes nav-33-glow {
+      0%, 100% { box-shadow: 0 0 8px rgba(239,68,68,0.25); filter: brightness(1); }
+      50% { box-shadow: 0 0 16px rgba(239,68,68,0.5); filter: brightness(1.12); }
+    }
+    .nav-33-pulse { animation: nav-33-glow 2.2s ease-in-out infinite; }
 
     /* Accordion */
     .accordion-body { overflow:hidden; transition: max-height 0.35s ease, opacity 0.25s ease; }
@@ -219,13 +217,21 @@ const JourneyNav = ({ active }) => (
 );
 
 const NAV_LATIN = 'Novus Ordo Seclorum · As above, so below';
+const NAV_LATIN_BEFORE_BELOW = 'Novus Ordo Seclorum · As above, so ';
 
 const NavTypewriter = () => {
   const [typed, done] = useTyping(NAV_LATIN, 65, 0);
+  const isPastPrefix = typed.length >= NAV_LATIN_BEFORE_BELOW.length;
+  const prefix = isPastPrefix ? NAV_LATIN_BEFORE_BELOW : typed;
+  const redPart = isPastPrefix ? typed.slice(NAV_LATIN_BEFORE_BELOW.length) : '';
   return (
     <span className="flex items-center gap-2 text-[9px] font-mono text-zinc-500 tracking-[0.2em] min-w-[200px]">
       <StarOfDavidSymbol size={12} className="text-zinc-300 shrink-0" />
-      <span>{typed}{!done && <span className="caret text-blue-400/80">|</span>}</span>
+      <span>
+        {prefix}
+        {redPart && <span className="text-red-400">{redPart}</span>}
+        {!done && <span className="caret text-blue-400/80">|</span>}
+      </span>
     </span>
   );
 };
@@ -283,7 +289,7 @@ const Navbar = () => {
         <button
           type="button"
           onClick={() => setTypewriterVisible(v => !v)}
-          className="flex items-center gap-2 text-[9px] font-mono text-zinc-600 tracking-[0.25em] hover:text-zinc-400 transition-colors focus:outline-none focus:ring-1 focus:ring-zinc-500 rounded px-1 -mx-1"
+          className="nav-33-pulse flex items-center gap-2 text-[9px] font-mono text-zinc-600 tracking-[0.25em] hover:text-zinc-400 transition-colors focus:outline-none focus:ring-1 focus:ring-zinc-500 rounded px-2 py-1 -mx-1"
           title="Click to reveal Novus Ordo Seclorum · As above, so below"
           aria-expanded={typewriterVisible}
         >
@@ -333,6 +339,11 @@ const Hero = () => {
   const [typed, done] = useTyping(
     'A geopolitical autopsy of the "Final World System" where all roads lead to Jerusalem.'
   );
+  const [showStar, setShowStar] = useState(false);
+  useEffect(() => {
+    const id = setInterval(() => setShowStar(s => !s), 2500);
+    return () => clearInterval(id);
+  }, []);
 
   return (
     <section id="hero" className="relative h-screen flex flex-col items-center justify-center overflow-hidden bg-black text-white px-4">
@@ -361,14 +372,17 @@ const Hero = () => {
           </span>
         </div>
 
-        {/* Glitch Title */}
-        <div style={{ animation: 'fade-up 0.7s ease 0.4s both' }}>
-          <h1
-            data-text="PAX JUDAICA"
-            className="glitch-text text-[2.8rem] sm:text-6xl md:text-7xl lg:text-[10rem] font-black tracking-tighter leading-[0.85] bg-gradient-to-b from-white to-zinc-600 bg-clip-text text-transparent select-none"
-          >
+        {/* Glitch Title + triangles that turn into Star of David every 5s */}
+        <div className="flex items-center justify-center gap-4 sm:gap-6" style={{ animation: 'fade-up 0.7s ease 0.4s both' }}>
+          <div className="shrink-0 transition-opacity duration-300">
+            {showStar ? <StarOfDavidSymbol size={40} className="text-zinc-300" /> : <TriangleSymbol size={40} className="text-zinc-300" />}
+          </div>
+          <h1 className="hero-title text-[2.8rem] sm:text-6xl md:text-7xl lg:text-[10rem] font-black leading-[0.85] select-none inline-block">
             PAX JUDAICA
           </h1>
+          <div className="shrink-0 transition-opacity duration-300">
+            {showStar ? <StarOfDavidSymbol size={40} className="text-zinc-300" /> : <TriangleSymbol size={40} className="text-zinc-300" />}
+          </div>
         </div>
 
         {/* Typing Subtitle */}
