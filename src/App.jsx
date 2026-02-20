@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import {
   MapPin, Cpu, Skull, Users, ShieldAlert, Eye,
   ChevronRight, ChevronDown, BookOpen, Target, Activity,
-  Compass, Quote, History, Workflow, Play, Pause
+  Compass, Quote, History, Workflow, Play, Pause, Landmark
 } from 'lucide-react';
 import WorldMap from './WorldMap';
 import okImg from '../images/ok.jpg';
@@ -68,6 +68,7 @@ const GlobalStyles = () => (
     .revealed .d4{animation-delay:0.28s;}
     .revealed .d5{animation-delay:0.36s;}
     .revealed .d6{animation-delay:0.44s;}
+    .revealed .d7{animation-delay:0.52s;}
 
     /* Card lift */
     .lift { transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.28s ease; }
@@ -165,6 +166,20 @@ function useAutoAdvance(total, ms = 4000, initialPlaying = false) {
   };
 }
 
+// ─── Triangle (Illuminati-style) and Star of David ─────────────────────────────
+const TriangleSymbol = ({ className = '', size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className || 'text-zinc-300'} aria-hidden>
+    <path d="M12 2 L2 22 L22 22 Z" stroke="currentColor" strokeWidth="1.5" fill="none" />
+  </svg>
+);
+
+const StarOfDavidSymbol = ({ className = '', size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className || 'text-zinc-300'} aria-hidden>
+    <path d="M12 1 L2 18 L22 18 Z" stroke="currentColor" strokeWidth="1.5" fill="none" />
+    <path d="M12 23 L2 6 L22 6 Z" stroke="currentColor" strokeWidth="1.5" fill="none" />
+  </svg>
+);
+
 // ─── Chrome Components ────────────────────────────────────────────────────────
 const ProgressBar = ({ pct }) => (
   <div
@@ -174,21 +189,25 @@ const ProgressBar = ({ pct }) => (
 );
 
 const NAV_SECTIONS = [
-  { id: 'hero',        label: 'Intro'       },
-  { id: 'quotes',      label: 'Archives'    },
-  { id: 'logic',       label: 'Logic'       },
-  { id: 'scripture',   label: 'Scripture'   },
-  { id: 'convergence', label: 'Flow'        },
-  { id: 'control',     label: 'Rabbit Hole' },
+  { id: 'hero',        label: 'Intro',       degree: '0°'   },
+  { id: 'quotes',      label: 'Archives',    degree: '7°'   },
+  { id: 'logic',       label: 'Logic',        degree: '14°'   },
+  { id: 'scripture',   label: 'Scripture',  degree: '21°'   },
+  { id: 'convergence', label: 'Flow',        degree: '28°'   },
+  { id: 'control',     label: 'Rabbit Hole', degree: '33°'   },
 ];
 
 const JourneyNav = ({ active }) => (
   <nav className="fixed right-5 top-1/2 -translate-y-1/2 z-50 hidden xl:flex flex-col gap-4 items-end">
-    {NAV_SECTIONS.map(({ id, label }) => (
-      <a key={id} href={`#${id}`} className="group flex items-center gap-3">
+    <span className="text-[8px] font-mono text-zinc-600 uppercase tracking-[0.3em] mb-1" title="Sacred latitude">33° N</span>
+    {NAV_SECTIONS.map(({ id, label, degree }) => (
+      <a key={id} href={`#${id}`} className="group flex items-center gap-3" title={degree}>
         <span className={`text-[9px] font-mono uppercase tracking-widest transition-all duration-300 ${
           active === id ? 'text-blue-400 opacity-100' : 'text-zinc-600 opacity-0 group-hover:opacity-100'
         }`}>{label}</span>
+        <span className={`text-[8px] font-mono tabular-nums transition-all duration-300 ${
+          active === id ? 'text-blue-500/80' : 'text-zinc-700 opacity-0 group-hover:opacity-70'
+        }`}>{degree}</span>
         <div className={`rounded-full transition-all duration-300 ${
           active === id
             ? 'w-3 h-3 bg-blue-500 shadow-[0_0_8px_rgba(96,165,250,0.9)]'
@@ -199,9 +218,22 @@ const JourneyNav = ({ active }) => (
   </nav>
 );
 
+const NAV_LATIN = 'Novus Ordo Seclorum · As above, so below';
+
+const NavTypewriter = () => {
+  const [typed, done] = useTyping(NAV_LATIN, 65, 0);
+  return (
+    <span className="flex items-center gap-2 text-[9px] font-mono text-zinc-500 tracking-[0.2em] min-w-[200px]">
+      <StarOfDavidSymbol size={12} className="text-zinc-300 shrink-0" />
+      <span>{typed}{!done && <span className="caret text-blue-400/80">|</span>}</span>
+    </span>
+  );
+};
+
 const Navbar = () => {
   const videoRef = useRef(null);
   const [showFallback, setShowFallback] = useState(false);
+  const [typewriterVisible, setTypewriterVisible] = useState(false);
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
@@ -241,10 +273,34 @@ const Navbar = () => {
         PAX JUDAICA<span className="caret text-blue-400 ml-0.5">|</span>
       </span>
     </div>
-    <div className="hidden md:flex gap-8 text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em]">
-      {[['#quotes','Archives'],['#logic','Logic'],['#scripture','Scripture'],['#convergence','Flow'],['#control','Rabbit Hole']].map(([href, label]) => (
-        <a key={href} href={href} className="nav-link hover:text-blue-400 transition-colors">{label}</a>
-      ))}
+    <div className="hidden md:flex items-center gap-8">
+      <div className="flex gap-8 text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em]">
+        {[['#quotes','Archives'],['#logic','Logic'],['#scripture','Scripture'],['#convergence','Flow'],['#control','Rabbit Hole']].map(([href, label]) => (
+          <a key={href} href={href} className="nav-link hover:text-blue-400 transition-colors">{label}</a>
+        ))}
+      </div>
+      <div className="flex items-center border-l border-zinc-800 pl-6 gap-0">
+        <button
+          type="button"
+          onClick={() => setTypewriterVisible(v => !v)}
+          className="flex items-center gap-2 text-[9px] font-mono text-zinc-600 tracking-[0.25em] hover:text-zinc-400 transition-colors focus:outline-none focus:ring-1 focus:ring-zinc-500 rounded px-1 -mx-1"
+          title="Click to reveal Novus Ordo Seclorum · As above, so below"
+          aria-expanded={typewriterVisible}
+        >
+          {typewriterVisible ? (
+            <StarOfDavidSymbol size={14} className="text-zinc-300 shrink-0" />
+          ) : (
+            <TriangleSymbol size={14} className="text-zinc-300 shrink-0" />
+          )}
+          <span>33°</span>
+        </button>
+        {typewriterVisible && (
+          <>
+            <span className="w-px h-4 bg-zinc-700 mx-2 shrink-0" aria-hidden />
+            <NavTypewriter />
+          </>
+        )}
+      </div>
     </div>
   </nav>
   );
@@ -259,7 +315,11 @@ const SectionHeading = ({ subtitle, title, align = 'left' }) => {
       className={`mb-16 space-y-3 reveal-wrap ${align === 'center' ? 'text-center' : ''} ${revealed ? 'revealed' : ''}`}
     >
       <span className="reveal-child d1 block text-blue-500 font-mono text-xs tracking-[0.4em] uppercase">{subtitle}</span>
-      <h2 className="reveal-child d2 text-2xl sm:text-4xl md:text-6xl font-black text-white tracking-tighter uppercase leading-tight">{title}</h2>
+      <div className={`reveal-child d2 flex items-center gap-3 ${align === 'center' ? 'justify-center' : ''}`}>
+        <span className="text-zinc-700 text-lg font-mono" aria-hidden>◆</span>
+        <h2 className="text-2xl sm:text-4xl md:text-6xl font-black text-white tracking-tighter uppercase leading-tight">{title}</h2>
+        <span className="text-zinc-700 text-lg font-mono" aria-hidden>◆</span>
+      </div>
       <div
         className="reveal-child d3 h-px bg-gradient-to-r from-blue-600 to-transparent"
         style={{ width: '80px', ...(align === 'center' ? { marginLeft: 'auto', marginRight: 'auto' } : {}) }}
@@ -289,12 +349,15 @@ const Hero = () => {
 
       <div className="relative z-10 text-center max-w-5xl space-y-8">
         {/* Badges */}
-        <div className="flex justify-center gap-4" style={{ animation: 'fade-up 0.6s ease 0.2s both' }}>
+        <div className="flex flex-wrap justify-center gap-3 sm:gap-4" style={{ animation: 'fade-up 0.6s ease 0.2s both' }}>
           <span className="px-3 py-1 bg-red-600/10 border border-red-600/30 text-red-500 text-[10px] font-bold uppercase tracking-widest rounded-full">
             Secret History #END
           </span>
           <span className="px-3 py-1 bg-blue-600/10 border border-blue-600/30 text-blue-500 text-[10px] font-bold uppercase tracking-widest rounded-full">
             Phase: Terminal
+          </span>
+          <span className="px-3 py-1 bg-zinc-800/50 border border-zinc-600/30 text-zinc-500 text-[9px] font-mono uppercase tracking-[0.2em] rounded-full" title="Sacred parallel · Trinity, Dallas, Jerusalem">
+            33° N
           </span>
         </div>
 
@@ -328,11 +391,6 @@ const Hero = () => {
           <a href="#convergence" className="px-6 sm:px-10 py-3 sm:py-4 border border-zinc-700 text-white font-black uppercase text-xs tracking-widest hover:bg-zinc-900 hover:border-zinc-500 transition-all">
             Convergence Engine
           </a>
-        </div>
-
-        {/* Scroll hint */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2" style={{ animation: 'float-a 2.5s ease-in-out infinite' }}>
-          <ChevronDown className="text-zinc-600" size={22} />
         </div>
       </div>
     </section>
@@ -383,6 +441,7 @@ const LogicSection = () => {
               <div className="w-12 h-[1px] bg-amber-500" />
               Cults and secret societies use it to ensure loyalty
             </div>
+            <p className="mt-4 text-zinc-600 text-[10px] font-mono italic">As above, so below — the occult maxim. The elite believe they can shape the material world by acting in the spiritual.</p>
           </div>
         </div>
 
@@ -559,9 +618,12 @@ const ScripturalSection = () => {
             <p className="text-zinc-500 text-xs leading-relaxed mb-6">
               Isaac Newton spent more time decoding the Bible than physics. He believed he found a hidden &quot;Bible code&quot; predicting a sequence: the return of the Jewish diaspora, the reconstruction of Solomon's Temple, and the rise of a world government. This was later popularized by the Scofield Reference Bible, which taught millions of Christians that they must support this specific geopolitical path to trigger the Second Coming.
             </p>
-            <div className="p-4 bg-black/50 rounded-xl border-l-4 border-blue-600 italic text-zinc-400 text-xs leading-relaxed">
-              "The British elite and Freemasons founded America and shaped its foreign policy to achieve this specific scriptural outcome."
+            <div className="p-4 bg-black/50 rounded-xl border-l-4 border-blue-600 italic text-zinc-400 text-xs leading-relaxed mb-4">
+              &quot;The British elite and Freemasons founded America and shaped its foreign policy to achieve this specific scriptural outcome.&quot;
             </div>
+            <p className="text-zinc-500 text-xs leading-relaxed">
+              The theory ties the same script to the <span className="text-white font-medium">corruption of finance</span>: banking dynasties (e.g. Rothschilds) and central banking are described as the lever — funding wars, toppling nations, and indebting populations so that only a &quot;Pax Judaica&quot; center (Jerusalem) can eventually offer order. The evil and chaos in the world are read as both intentional (redemption through sin) and profitable for those who control the money.
+            </p>
           </div>
 
           {/* Greater Israel — image + explanation */}
@@ -819,6 +881,7 @@ const RABBIT_HOLES = [
   { title: 'Transgression & Cohesion', icon: Users,    tags: ['Cults','Moloch','Sacrifice'], content: "Child sacrifice is the archetypal taboo: Moloch (Molech), the Levantine god to whom children were offered in fire, is condemned throughout the Bible. The thesis is that secret societies and cults still use this template — participation in or condoning the sacrifice of the innocent creates absolute group cohesion and 'synchronicity' through shared guilt and mutual destruction. Gaza is read by some as a modern 'ritual sacrifice' (the ultimate taboo of killing children) intended to bind a population by leaving them 'no exit' from the world's condemnation.", delayClass: 'd4' },
   { title: 'Gog & Magog', icon: ShieldAlert,          tags: ['Eschatology','Iran','Russia'],        content: "Prophecy casts Iran and Russia as the northern invaders (Gog and Magog) who must attack Israel to trigger divine intervention or the Messiah. Destroying Iran removes the last challenger to Pax Judaica in the Middle East while fulfilling the scriptural sequence. The U.S.–Iran conflict is both strategic and eschatological.", delayClass: 'd5' },
   { title: 'Frankist Acceleration', icon: BookOpen,   tags: ['Jacob Frank','Redemption Through Sin','Khazar'], content: "Jacob Frank's 18th-century doctrine: redemption through sin — the world must be pushed to collapse to force God's hand. The current rise in anti-Semitism is read as coordinated to drive the diaspora back to Israel, the scriptural prerequisite. The Khazar (13th Tribe) thesis — that Ashkenazi Jews descend from converts rather than biblical Israelites — is cited as undermining the Promised Land claim while giving the elite a 'neutral' power base for a Frankist occult agenda.", delayClass: 'd6' },
+  { title: 'Central Banking & the Lever', icon: Landmark, tags: ['Rothschilds','Debt','Corruption'], content: "The thesis links the evil and corruption in the world to Pax Judaica via the control of money. Banking dynasties (Rothschilds and others) and central banks are described as funding both sides of wars, indebting nations, and shaping policy so that chaos is profitable and only a Jerusalem-centered order can 'restore' stability. Corruption — political, financial, moral — is read as the engine that funds the script and keeps the population divided while the elite consolidate.", delayClass: 'd7' },
 ];
 
 const RabbitHoleSection = () => {
@@ -842,6 +905,7 @@ const QUOTES = [
   "All road leads to Jerusalem. This helps us understand certain things about the world that otherwise don't make any sense.",
   "Evil must triumph so that good may rise. There must be total darkness for the light to shine, and all hope must end so that we can become hope ourselves.",
   "Redemption through sin. The world is so evil it must be pushed to collapse so that the Messiah can appear.",
+  "Who controls the money controls the world. They fund the wars, they own the debt, and when everything collapses they are the only ones left standing.",
 ];
 
 const QuotesSection = () => {
@@ -1022,26 +1086,30 @@ const Footer = () => {
   return (
     <footer className="py-32 px-6 text-center bg-black border-t border-zinc-900/40">
       <div ref={ref} className={`max-w-2xl mx-auto space-y-12 reveal-wrap ${revealed ? 'revealed' : ''}`}>
-        <p className="reveal-child d1 text-zinc-600 text-xs font-mono uppercase tracking-[0.4em]">Project Thesis</p>
+        <p className="reveal-child d1 text-zinc-500 text-sm font-mono uppercase tracking-[0.3em]">Project Thesis</p>
         <div className="reveal-child d1 p-6 sm:p-10 border border-blue-900/40 bg-blue-950/10 rounded-2xl sm:rounded-[3rem] space-y-4 text-left">
           <h4 className="text-xl font-black text-white uppercase tracking-tighter">Why This Exists</h4>
-          <p className="text-zinc-400 font-light leading-relaxed text-sm">
+          <p className="text-zinc-300 font-light leading-loose text-base sm:text-lg">
             This project exists to educate the public about the greater powers at work in the world. Ask yourself: does Pax Judaica explain the chaos we see today? Every day, more people are learning what Pax Judaica means — and how it is playing out in real time.
           </p>
         </div>
-        <p className="reveal-child d2 text-zinc-600 text-xs font-mono uppercase tracking-[0.4em]">Prophetic Disclaimer</p>
+        <p className="reveal-child d2 text-zinc-500 text-sm font-mono uppercase tracking-[0.3em]">Prophetic Disclaimer</p>
         <div className="reveal-child d2 p-6 sm:p-12 border border-red-900/50 bg-red-950/10 rounded-2xl sm:rounded-[3rem] space-y-6">
           <h4 className="text-2xl font-black text-white uppercase tracking-tighter">The Resistance Thesis</h4>
-          <p className="text-zinc-400 font-light leading-relaxed">
-            "When empires come into being, that's when they end. Arrogance and insularity lead to collapse. We have to imagine how we can rebuild the world together after the great flood that is coming."
+          <p className="text-zinc-300 font-light leading-loose text-base sm:text-lg">
+            &quot;When empires come into being, that&apos;s when they end. Arrogance and insularity lead to collapse. We have to imagine how we can rebuild the world together after the great flood that is coming.&quot;
           </p>
         </div>
         <div className="reveal-child d3 flex flex-col items-center gap-6">
           <div className="w-24 h-[1px] bg-zinc-800" />
-          <p className="text-blue-500 font-bold uppercase tracking-[0.2em] text-sm">Predictive History: Final Session</p>
-          <p className="text-zinc-600 text-[10px] max-w-sm mx-auto leading-relaxed uppercase font-mono">
-            Education and Speculation only. Distilled from "Secret History #END".
+          <p className="text-blue-400 font-bold uppercase tracking-[0.2em] text-base">Predictive History: Final Session</p>
+          <p className="text-zinc-400 text-xs sm:text-sm max-w-sm mx-auto leading-relaxed uppercase font-mono">
+            Education and Speculation only. Distilled from &quot;Secret History #END&quot;.
           </p>
+          <div className="flex items-center justify-center gap-2 text-zinc-400 text-xs sm:text-sm font-mono tracking-[0.3em] italic" title="Illuminati / Hermetic homage">
+            <TriangleSymbol size={14} className="text-zinc-300 shrink-0" />
+            <span>Novus Ordo Seclorum · As above, so below</span>
+          </div>
         </div>
       </div>
     </footer>
