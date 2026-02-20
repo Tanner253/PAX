@@ -337,7 +337,7 @@ const SectionHeading = ({ subtitle, title, align = 'left' }) => {
 // ─── Hero ─────────────────────────────────────────────────────────────────────
 const Hero = () => {
   const [typed, done] = useTyping(
-    'A geopolitical autopsy of the "Final World System" where all roads lead to Jerusalem.'
+    'A geopolitical autopsy of the "Final World System" where all roads lead to Jerusalem. Decode what they\'ve kept in plain sight.'
   );
   const [showStar, setShowStar] = useState(false);
   useEffect(() => {
@@ -658,11 +658,21 @@ const ScripturalSection = () => {
                   className="w-full sm:w-28 h-auto rounded-xl border border-zinc-700 sm:shrink-0 object-cover"
                 />
                 <div className="space-y-1.5">
-                  <p className="text-zinc-300 text-xs font-bold leading-snug">IDF Uniform Badge — "Israel's Promised Land"</p>
+                  <p className="text-zinc-300 text-xs font-bold leading-snug">IDF Uniform Badge — &quot;Israel&apos;s Promised Land&quot;</p>
                   <p className="text-zinc-500 text-xs leading-relaxed">
-                    An official Israeli military badge depicting the map of Greater Israel — Nile to Euphrates. This is not fringe ideology. It is stitched onto soldiers' uniforms.
+                    An official Israeli military badge depicting the map of Greater Israel — Nile to Euphrates. This is not fringe ideology. It is stitched onto soldiers&apos; uniforms.
                   </p>
                 </div>
+              </div>
+            </div>
+
+            {/* If it's conspiracy — why the badge? */}
+            <div className="px-6 pt-4">
+              <div className="p-4 bg-zinc-800/50 border border-zinc-700 rounded-xl space-y-2">
+                <p className="text-[9px] font-mono text-amber-400 uppercase tracking-widest">If this is all conspiracy — why this?</p>
+                <p className="text-zinc-300 text-xs leading-relaxed">
+                  If this were mere conspiracy, why do IDF soldiers from Israel wear the map of Greater Israel on their uniforms today? The badge is the state&apos;s own symbolism. It makes clear that Israel&apos;s territorial vision aligns with the script: clear the land to the borders of Genesis 15:18, confront Gog and Magog, then establish Pax Judaica. The evidence is not hidden. It is worn in plain sight.
+                </p>
               </div>
             </div>
 
