@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import WorldMap from './WorldMap';
 import okImg from '../images/ok.jpg';
+import iconMp4 from '../images/icon.mp4';
 
 // ─── Global Styles ────────────────────────────────────────────────────────────
 const GlobalStyles = () => (
@@ -198,12 +199,44 @@ const JourneyNav = ({ active }) => (
   </nav>
 );
 
-const Navbar = () => (
+const Navbar = () => {
+  const videoRef = useRef(null);
+  const [showFallback, setShowFallback] = useState(false);
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    const onError = () => setShowFallback(true);
+    const tryPlay = () => { v.play().catch(() => {}); };
+    v.addEventListener('error', onError);
+    v.addEventListener('canplay', tryPlay);
+    v.addEventListener('loadeddata', tryPlay);
+    if (v.readyState >= 2) tryPlay();
+    return () => {
+      v.removeEventListener('error', onError);
+      v.removeEventListener('canplay', tryPlay);
+      v.removeEventListener('loadeddata', tryPlay);
+    };
+  }, []);
+  return (
   <nav className="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/[0.06] px-6 py-4 flex justify-between items-center">
     <div className="flex items-center gap-2">
-      <div className="w-8 h-8 bg-blue-600 rounded-sm rotate-45 flex items-center justify-center shadow-[0_0_15px_rgba(37,99,235,0.5)]">
-        <span className="text-white font-black -rotate-45 text-sm leading-none">P</span>
-      </div>
+      {showFallback ? (
+        <div className="w-8 h-8 bg-blue-600 rounded-sm rotate-45 flex items-center justify-center shadow-[0_0_15px_rgba(37,99,235,0.5)] flex-shrink-0">
+          <span className="text-white font-black -rotate-45 text-sm leading-none">P</span>
+        </div>
+      ) : (
+        <video
+          ref={videoRef}
+          src={iconMp4}
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="w-8 h-8 object-cover rounded-sm flex-shrink-0 bg-transparent"
+          style={{ minWidth: 32, minHeight: 32, display: 'block' }}
+          aria-hidden
+        />
+      )}
       <span className="text-xl font-black tracking-tighter text-white">
         PAX JUDAICA<span className="caret text-blue-400 ml-0.5">|</span>
       </span>
@@ -214,7 +247,8 @@ const Navbar = () => (
       ))}
     </div>
   </nav>
-);
+  );
+};
 
 // ─── Section Heading ──────────────────────────────────────────────────────────
 const SectionHeading = ({ subtitle, title, align = 'left' }) => {
